@@ -1,0 +1,7 @@
+site_name: Engineering Notes
+site_description: My journey through software engineering and AI
+
+theme:
+  name: material
+  palette:
+    scheme: slate
