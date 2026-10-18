@@ -9,6 +9,8 @@ artificial intelligence, and building useful products.
 
 - [My AI Engineering Journey: From Python Scripts to APIs](my-ai-engineering-journey.md)
 
+- [Building Reliable AI Applications: LLMs, Evaluation, and Docker](building-reliable-ai-applications.md)
+
 ## Topics
 
 - Python
