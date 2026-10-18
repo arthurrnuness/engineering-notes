@@ -1,0 +1,1262 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="My journey through software engineering and AI">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../my-ai-engineering-journey/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Building Reliable AI Applications: LLMs, Evaluation, and Docker - Engineering Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#building-reliable-ai-applications-llms-evaluation-and-docker" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Engineering Notes" class="md-header__button md-logo" aria-label="Engineering Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Engineering Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Building Reliable AI Applications: LLMs, Evaluation, and Docker
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Engineering Notes" class="md-nav__button md-logo" aria-label="Engineering Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Engineering Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engineering Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Building Reliable AI Applications: LLMs, Evaluation, and Docker
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Building Reliable AI Applications: LLMs, Evaluation, and Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-integrating-qwen-with-fastapi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Integrating Qwen with FastAPI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Integrating Qwen with FastAPI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calling-an-llm-with-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calling an LLM with Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-1-giving-qwen-insufficient-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake #1: Giving Qwen insufficient information
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-2-incorrectly-constructing-the-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake #2: Incorrectly constructing the prompt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-takeaway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key takeaway
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-evaluating-ai-generated-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Evaluating AI-Generated Reports
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Evaluating AI-Generated Reports">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-objective_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#separating-ai-output-from-trusted-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Separating AI output from trusted information
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-3-trying-to-evaluate-everything-with-another-llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake #3: Trying to evaluate everything with another LLM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-4-assuming-all-fields-exist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake #4: Assuming all fields exist
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-5-confusing-strings-and-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake #5: Confusing strings and numbers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returning-evaluation-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returning evaluation results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-takeaway_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key takeaway
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-running-my-first-application-with-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Running My First Application with Docker
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Running My First Application with Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-objective_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-a-dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding a Dockerfile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-6-incorrectly-starting-uvicorn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake #6: Incorrectly starting Uvicorn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-7-missing-dependencies-inside-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake #7: Missing dependencies inside Docker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-and-running-the-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building and running the container
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-takeaway_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key takeaway
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-what-ive-learned-about-ai-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. What I've Learned About AI Engineering
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. What's Next?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. What&#39;s Next?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#solar-plant-ai-analyst" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solar Plant AI Analyst
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../my-ai-engineering-journey/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    My AI Engineering Journey: From Python Scripts to APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-integrating-qwen-with-fastapi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Integrating Qwen with FastAPI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Integrating Qwen with FastAPI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calling-an-llm-with-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calling an LLM with Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-1-giving-qwen-insufficient-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake #1: Giving Qwen insufficient information
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-2-incorrectly-constructing-the-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake #2: Incorrectly constructing the prompt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-takeaway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key takeaway
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-evaluating-ai-generated-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Evaluating AI-Generated Reports
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Evaluating AI-Generated Reports">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-objective_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#separating-ai-output-from-trusted-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Separating AI output from trusted information
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-3-trying-to-evaluate-everything-with-another-llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake #3: Trying to evaluate everything with another LLM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-4-assuming-all-fields-exist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake #4: Assuming all fields exist
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-5-confusing-strings-and-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake #5: Confusing strings and numbers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returning-evaluation-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returning evaluation results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-takeaway_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key takeaway
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-running-my-first-application-with-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Running My First Application with Docker
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Running My First Application with Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-objective_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-a-dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding a Dockerfile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-6-incorrectly-starting-uvicorn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake #6: Incorrectly starting Uvicorn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-7-missing-dependencies-inside-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake #7: Missing dependencies inside Docker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-and-running-the-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building and running the container
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-takeaway_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key takeaway
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-what-ive-learned-about-ai-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. What I've Learned About AI Engineering
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. What's Next?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. What&#39;s Next?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#solar-plant-ai-analyst" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solar Plant AI Analyst
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="building-reliable-ai-applications-llms-evaluation-and-docker">Building Reliable AI Applications: LLMs, Evaluation, and Docker</h1>
+<p><em>October 18, 2026</em></p>
+<p>In my previous article, I documented my first steps with Python, FastAPI, Pydantic, and SQLite.</p>
+<p>Since then, I've taken three important steps toward becoming an AI engineer:</p>
+<ol>
+<li>Integrating a local LLM into a REST API.</li>
+<li>Evaluating AI-generated reports against trusted data.</li>
+<li>Packaging an application using Docker.</li>
+</ol>
+<p>Here are the most important lessons I've learned.</p>
+<hr />
+<h2 id="1-integrating-qwen-with-fastapi">1. Integrating Qwen with FastAPI</h2>
+<h3 id="the-objective">The objective</h3>
+<p>I wanted to create an API that retrieves solar generation data and asks Qwen, a locally running language model, to explain production deviations.</p>
+<p>The workflow looks like this:</p>
+<p><strong>HTTP Request → FastAPI → Python Calculations → Qwen → JSON Response</strong></p>
+<p>I used Ollama to run Qwen locally.</p>
+<h3 id="calling-an-llm-with-python">Calling an LLM with Python</h3>
+<pre><code class="language-python">from ollama import chat
+
+response = chat(
+    model=&quot;qwen3.5:9b&quot;,
+    messages=[
+        {
+            &quot;role&quot;: &quot;system&quot;,
+            &quot;content&quot;: &quot;You are a cautious energy analyst.&quot;
+        },
+        {
+            &quot;role&quot;: &quot;user&quot;,
+            &quot;content&quot;: &quot;Explain a 24% solar generation shortfall.&quot;
+        }
+    ],
+    think=False
+)
+
+print(response.message.content)
+</code></pre>
+<p>An important concept is the distinction between system and user messages:</p>
+<ul>
+<li><strong>System message:</strong> Defines how the model should behave.</li>
+<li><strong>User message:</strong> Provides the task and relevant information.</li>
+</ul>
+<h3 id="mistake-1-giving-qwen-insufficient-information">Mistake #1: Giving Qwen insufficient information</h3>
+<p>Initially, I provided only the plant name and date.</p>
+<p>However, the model needed the actual generation, expected generation, and calculated shortfall.</p>
+<p>I learned to construct a prompt containing the relevant data:</p>
+<pre><code class="language-python">prompt = f&quot;&quot;&quot;
+Plant: {record[&quot;plant&quot;]}
+Date: {record[&quot;date&quot;]}
+Actual generation: {record[&quot;actual_mwh&quot;]} MWh
+Expected generation: {record[&quot;expected_mwh&quot;]} MWh
+Shortfall: {shortfall}%
+
+Explain the deviation without inventing its cause.
+&quot;&quot;&quot;
+</code></pre>
+<h3 id="mistake-2-incorrectly-constructing-the-prompt">Mistake #2: Incorrectly constructing the prompt</h3>
+<p>One of my tests failed because the model wasn't receiving the expected production numbers.</p>
+<p>The problem was related to how I constructed and passed the prompt.</p>
+<p>This reinforced the importance of Python f-strings, which allow variables to be inserted into text dynamically.</p>
+<h3 id="key-takeaway">Key takeaway</h3>
+<p><strong>Use conventional Python code for deterministic operations and LLMs for language-related tasks.</strong></p>
+<p>Python should calculate the production shortfall. Qwen should explain the results.</p>
+<p>Also, a production shortfall alone doesn't reveal its cause. The AI must avoid inventing weather conditions, equipment failures, or other explanations without evidence.</p>
+<hr />
+<h2 id="2-evaluating-ai-generated-reports">2. Evaluating AI-Generated Reports</h2>
+<h3 id="the-objective_1">The objective</h3>
+<p>How can I trust an AI-generated report?</p>
+<p>Imagine Qwen produces:</p>
+<blockquote>
+<p>Caucaia generated 76 MWh against an expected 100 MWh, representing a 30% shortfall.</p>
+</blockquote>
+<p>The explanation sounds reasonable, but the correct shortfall is 24%.</p>
+<p>I learned how to build a Python function to detect this kind of error.</p>
+<h3 id="separating-ai-output-from-trusted-information">Separating AI output from trusted information</h3>
+<p>The evaluation function receives two dictionaries:</p>
+<pre><code class="language-python">report = {
+    &quot;plant&quot;: &quot;Caucaia&quot;,
+    &quot;actual_mwh&quot;: 76.0,
+    &quot;expected_mwh&quot;: 100.0,
+    &quot;shortfall_pct&quot;: 30.0,
+    &quot;explanation&quot;: &quot;Production was below expectations.&quot;
+}
+
+reference = {
+    &quot;plant&quot;: &quot;Caucaia&quot;,
+    &quot;actual_mwh&quot;: 76.0,
+    &quot;expected_mwh&quot;: 100.0
+}
+</code></pre>
+<p>The first contains AI-generated claims.</p>
+<p>The second contains trusted reference data.</p>
+<p><strong>The fundamental rule: Never use the model's own claims as the source of truth when verifying those claims.</strong></p>
+<h3 id="mistake-3-trying-to-evaluate-everything-with-another-llm">Mistake #3: Trying to evaluate everything with another LLM</h3>
+<p>My initial instinct was to ask Qwen to generate an explanation and then extract percentages from the text.</p>
+<p>I experimented with regular expressions.</p>
+<p>However, the exercise was actually about validating structured data.</p>
+<p>A much simpler approach was to compare dictionary values directly.</p>
+<pre><code class="language-python">correct_pct = calculate_shortfall_pct(
+    reference[&quot;actual_mwh&quot;],
+    reference[&quot;expected_mwh&quot;]
+)
+
+reported_pct = report[&quot;shortfall_pct&quot;]
+
+if abs(reported_pct - correct_pct) &gt; 0.25:
+    errors.append(&quot;Incorrect shortfall percentage.&quot;)
+</code></pre>
+<p>Here, <code>abs()</code> calculates the absolute difference.</p>
+<p>The <code>0.25</code> represents the allowed tolerance in percentage points.</p>
+<h3 id="mistake-4-assuming-all-fields-exist">Mistake #4: Assuming all fields exist</h3>
+<p>Initially, I accessed dictionary values directly:</p>
+<pre><code class="language-python">reported_pct = report[&quot;shortfall_pct&quot;]
+</code></pre>
+<p>But what happens if the AI forgets to include that field?</p>
+<p>Python raises a <code>KeyError</code>.</p>
+<p>A safer approach uses <code>.get()</code>:</p>
+<pre><code class="language-python">reported_pct = report.get(&quot;shortfall_pct&quot;)
+
+if reported_pct is None:
+    errors.append(&quot;Shortfall percentage is missing.&quot;)
+</code></pre>
+<h3 id="mistake-5-confusing-strings-and-numbers">Mistake #5: Confusing strings and numbers</h3>
+<p>I initially tried to validate production values as strings.</p>
+<p>However, production measurements should be numeric:</p>
+<pre><code class="language-python">if not isinstance(actual, (int, float)):
+    errors.append(&quot;Actual generation must be a number.&quot;)
+</code></pre>
+<p>I also learned how to validate explanations:</p>
+<pre><code class="language-python">if not isinstance(explanation, str) or not explanation.strip():
+    errors.append(&quot;Explanation must be a nonempty string.&quot;)
+</code></pre>
+<p>The <code>.strip()</code> method removes whitespace from both ends of a string, helping detect explanations containing only spaces.</p>
+<h3 id="returning-evaluation-results">Returning evaluation results</h3>
+<p>My function eventually returned a dictionary like:</p>
+<pre><code class="language-python">{
+    &quot;passed&quot;: False,
+    &quot;errors&quot;: [
+        &quot;Incorrect shortfall: expected 24.0%, received 30.0%.&quot;
+    ]
+}
+</code></pre>
+<p>The expression:</p>
+<pre><code class="language-python">len(errors) == 0
+</code></pre>
+<p>returns <code>True</code> only when no validation errors were found.</p>
+<h3 id="key-takeaway_1">Key takeaway</h3>
+<p><strong>AI evaluation doesn't always require AI.</strong></p>
+<p>Many errors can be detected using deterministic Python logic.</p>
+<p>This doesn't guarantee that an entire AI-generated explanation is correct, but it provides an important reliability layer.</p>
+<hr />
+<h2 id="3-running-my-first-application-with-docker">3. Running My First Application with Docker</h2>
+<h3 id="the-objective_2">The objective</h3>
+<p>Until now, my applications depended on Python packages installed on my MacBook.</p>
+<p>I wanted to understand how to package an application so it could run in an isolated environment.</p>
+<p>That's where Docker comes in.</p>
+<p>Docker packages an application and its dependencies into an image that can be executed as a container.</p>
+<h3 id="understanding-a-dockerfile">Understanding a Dockerfile</h3>
+<p>The five instructions I learned were:</p>
+<table>
+<thead>
+<tr>
+<th>Instruction</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FROM</code></td>
+<td>Select a base image</td>
+</tr>
+<tr>
+<td><code>WORKDIR</code></td>
+<td>Set the working directory</td>
+</tr>
+<tr>
+<td><code>COPY</code></td>
+<td>Copy application files</td>
+</tr>
+<tr>
+<td><code>RUN</code></td>
+<td>Execute commands during image creation</td>
+</tr>
+<tr>
+<td><code>CMD</code></td>
+<td>Define the startup command</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mistake-6-incorrectly-starting-uvicorn">Mistake #6: Incorrectly starting Uvicorn</h3>
+<p>My first Docker container failed because I incorrectly specified the application startup command.</p>
+<p>Uvicorn expects:</p>
+<pre><code class="language-text">module:application
+</code></pre>
+<p>For my FastAPI application:</p>
+<pre><code class="language-dockerfile">CMD [&quot;python&quot;, &quot;-m&quot;, &quot;uvicorn&quot;, &quot;exercise_07_fastapi:app&quot;, &quot;--host&quot;, &quot;0.0.0.0&quot;, &quot;--port&quot;, &quot;8000&quot;]
+</code></pre>
+<p>The <code>:app</code> refers to the FastAPI application object:</p>
+<pre><code class="language-python">app = FastAPI()
+</code></pre>
+<p>I had encountered this problem before when running FastAPI outside Docker!</p>
+<h3 id="mistake-7-missing-dependencies-inside-docker">Mistake #7: Missing dependencies inside Docker</h3>
+<p>Another error was:</p>
+<pre><code class="language-text">No module named uvicorn
+</code></pre>
+<p>Initially, I wondered why this happened since Uvicorn was already installed in my Python virtual environment.</p>
+<p>Then I understood:</p>
+<p><strong>My MacBook's Python environment and the Docker container's Python environment are independent.</strong></p>
+<p>The container needs its own dependencies.</p>
+<p>I created a requirements file containing packages such as:</p>
+<pre><code class="language-text">fastapi
+uvicorn
+pydantic
+ollama
+</code></pre>
+<p>The Dockerfile installs them using:</p>
+<pre><code class="language-dockerfile">RUN pip install --no-cache-dir -r requirements-docker.txt
+</code></pre>
+<h3 id="building-and-running-the-container">Building and running the container</h3>
+<p>After fixing the Dockerfile, I successfully executed:</p>
+<pre><code class="language-bash">docker build -t solar-ai-lab .
+</code></pre>
+<p>And:</p>
+<pre><code class="language-bash">docker run --rm -p 8000:8000 solar-ai-lab
+</code></pre>
+<p>The application became accessible at:</p>
+<pre><code class="language-text">http://localhost:8000/docs
+</code></pre>
+<p>The <code>-p 8000:8000</code> argument maps port 8000 on my Mac to port 8000 inside the container.</p>
+<h3 id="key-takeaway_2">Key takeaway</h3>
+<p><strong>Docker makes applications more portable by packaging their runtime dependencies.</strong></p>
+<p>However, packaging an application is not the same as deploying a complete production system. Configuration, security, monitoring, and external services still need attention.</p>
+<hr />
+<h2 id="4-what-ive-learned-about-ai-engineering">4. What I've Learned About AI Engineering</h2>
+<p>These exercises changed how I think about building AI applications.</p>
+<p>Initially, I focused primarily on interacting with language models.</p>
+<p>Now I understand that a functional AI application needs much more:</p>
+<ul>
+<li>Reliable data retrieval.</li>
+<li>Deterministic calculations.</li>
+<li>Input and output validation.</li>
+<li>APIs for communication.</li>
+<li>Automated testing.</li>
+<li>AI evaluation.</li>
+<li>Reproducible execution environments.</li>
+</ul>
+<p>An LLM is just one component of the system.</p>
+<p><strong>My biggest lesson so far: AI engineering is as much about building reliable software as it is about understanding AI models.</strong></p>
+<hr />
+<h2 id="5-whats-next">5. What's Next?</h2>
+<p>My next project will combine everything I've learned into a single application:</p>
+<h3 id="solar-plant-ai-analyst">Solar Plant AI Analyst</h3>
+<p>The architecture will be:</p>
+<p><strong>SQLite → FastAPI → Python → Qwen → Report Evaluation → Docker</strong></p>
+<p>My immediate next challenge is connecting a Dockerized FastAPI application to Ollama running on my MacBook.</p>
+<p>Eventually, I want to build an application capable of retrieving actual energy production data, identifying performance deviations, and generating reliable reports for human review.</p>
+<p>I'll continue documenting the mistakes, lessons, and technical decisions along the way.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
