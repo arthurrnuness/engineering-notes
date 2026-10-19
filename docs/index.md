@@ -6,10 +6,13 @@ I'm documenting my journey through software engineering,
 artificial intelligence, and building useful products.
 
 ## Articles
+## Articles
 
-- [My AI Engineering Journey: From Python Scripts to APIs](my-ai-engineering-journey.md)
+- **October 18, 2026** — [Building Reliable AI Applications: LLMs, Evaluation, and Docker](building-reliable-ai-applications.md)
 
-- [Building Reliable AI Applications: LLMs, Evaluation, and Docker](building-reliable-ai-applications.md)
+- **October 17, 2026** — [My AI Engineering Journey: From Python Scripts to APIs](my-ai-engineering-journey.md)
+
+- ** October 19, 2026** -  [From APIs to AI Agents: Tool Calling and Reliable Answers](from-apis-to-ai-agents.md) 
 
 ## Topics
 
