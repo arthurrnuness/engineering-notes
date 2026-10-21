@@ -14,6 +14,8 @@ artificial intelligence, and building useful products.
 
 - ** October 19, 2026** -  [From APIs to AI Agents: Tool Calling and Reliable Answers](from-apis-to-ai-agents.md) 
 
+- **October 20, 2026** - [From Evaluated AI Agents to Semantic RAG](from-evaluated-agents-to-semantic-rag.md) 
+
 ## Topics
 
 - Python
