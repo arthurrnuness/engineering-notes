@@ -1,0 +1,2345 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="My journey through software engineering and AI">
+      
+      
+      
+      
+        <link rel="prev" href="../from-apis-to-ai-agents/">
+      
+      
+        <link rel="next" href="../my-ai-engineering-journey/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>From Evaluated AI Agents to Semantic RAG: Building Systems I Can Actually Test - Engineering Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#from-evaluated-ai-agents-to-semantic-rag-building-systems-i-can-actually-test" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Engineering Notes" class="md-header__button md-logo" aria-label="Engineering Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Engineering Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              From Evaluated AI Agents to Semantic RAG: Building Systems I Can Actually Test
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Engineering Notes" class="md-nav__button md-logo" aria-label="Engineering Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Engineering Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engineering Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../building-reliable-ai-applications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Building Reliable AI Applications: LLMs, Evaluation, and Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../from-apis-to-ai-agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From APIs to AI Agents: Tool Calling and Reliable Answers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From Evaluated AI Agents to Semantic RAG: Building Systems I Can Actually Test
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From Evaluated AI Agents to Semantic RAG: Building Systems I Can Actually Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-starting-point-a-working-agent-with-a-reliability-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Starting point: a working agent with a reliability problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-exercises-2324-structured-claims-and-an-independent-trend-evaluator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Exercises 23–24: Structured claims and an independent trend evaluator
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Exercises 23–24: Structured claims and an independent trend evaluator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-defining-an-answer-contract-with-pydantic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Defining an answer contract with Pydantic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-requesting-structured-output-from-ollama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Requesting structured output from Ollama
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-calculating-ground-truth-separately" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Calculating ground truth separately
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-testing-a-claim-against-ground-truth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Testing a claim against ground truth
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-exercises-2526-evaluating-every-date-and-rejecting-failed-answers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Exercises 25–26: Evaluating every date and rejecting failed answers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Exercises 25–26: Evaluating every date and rejecting failed answers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-checking-a-dictionary-of-daily-classifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Checking a dictionary of daily classifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-detecting-errors-is-not-the-same-as-blocking-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Detecting errors is not the same as blocking them
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-exercise-27-validating-arguments-the-llm-sends-to-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Exercise 27: Validating arguments the LLM sends to Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-exercises-2831-my-first-document-based-rag-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Exercises 28–31: My first document-based RAG pipeline
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Exercises 28–31: My first document-based RAG pipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-reading-documents-with-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Reading documents with Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-understanding-strip-and-list-comprehensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Understanding .strip() and list comprehensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-exercises-3233-embeddings-and-cosine-similarity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Exercises 32–33: Embeddings and cosine similarity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Exercises 32–33: Embeddings and cosine similarity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-my-first-embedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 My first embedding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-implementing-cosine-similarity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Implementing cosine similarity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-exercises-3436-semantic-retrieval-from-my-document" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Exercises 34–36: Semantic retrieval from my document
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-exercises-3738-top-k-retrieval-and-its-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Exercises 37–38: Top-K retrieval and its limits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-exercises-3942-chunking-changes-what-the-model-can-retrieve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Exercises 39–42: Chunking changes what the model can retrieve
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Exercises 39–42: Chunking changes what the model can retrieve">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-splitting-by-paragraphs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Splitting by paragraphs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-combining-paragraphs-that-belong-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Combining paragraphs that belong together
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-exercise-43-writing-an-automatic-paragraph-chunker-from-scratch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Exercise 43: Writing an automatic paragraph chunker from scratch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Exercise 43: Writing an automatic paragraph chunker from scratch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-testing-with-a-smaller-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Testing with a smaller limit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-exercise-44-turning-semantic-retrieval-into-a-reusable-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Exercise 44: Turning semantic retrieval into a reusable function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-exercise-45-my-first-retrieval-evaluation-suite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Exercise 45: My first retrieval evaluation suite
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Exercise 45: My first retrieval evaluation suite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-the-failed-test-is-more-useful-than-it-first-looks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1 The failed test is more useful than it first looks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-limits-of-the-current-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2 Limits of the current evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-lessons-about-engineering-not-just-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Lessons about engineering, not just AI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-what-i-can-build-nowand-what-i-still-cannot-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. What I can build now—and what I still cannot claim
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. What I can build now—and what I still cannot claim">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-a-tool-calling-energy-analyst-with-deterministic-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. A tool-calling energy analyst with deterministic checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-a-semantic-rag-pipeline-with-basic-retrieval-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. A semantic RAG pipeline with basic retrieval evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Next steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-takeaway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final takeaway
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../my-ai-engineering-journey/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    My AI Engineering Journey: From Python Scripts to APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-starting-point-a-working-agent-with-a-reliability-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Starting point: a working agent with a reliability problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-exercises-2324-structured-claims-and-an-independent-trend-evaluator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Exercises 23–24: Structured claims and an independent trend evaluator
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Exercises 23–24: Structured claims and an independent trend evaluator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-defining-an-answer-contract-with-pydantic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Defining an answer contract with Pydantic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-requesting-structured-output-from-ollama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Requesting structured output from Ollama
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-calculating-ground-truth-separately" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Calculating ground truth separately
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-testing-a-claim-against-ground-truth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Testing a claim against ground truth
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-exercises-2526-evaluating-every-date-and-rejecting-failed-answers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Exercises 25–26: Evaluating every date and rejecting failed answers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Exercises 25–26: Evaluating every date and rejecting failed answers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-checking-a-dictionary-of-daily-classifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Checking a dictionary of daily classifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-detecting-errors-is-not-the-same-as-blocking-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Detecting errors is not the same as blocking them
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-exercise-27-validating-arguments-the-llm-sends-to-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Exercise 27: Validating arguments the LLM sends to Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-exercises-2831-my-first-document-based-rag-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Exercises 28–31: My first document-based RAG pipeline
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Exercises 28–31: My first document-based RAG pipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-reading-documents-with-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Reading documents with Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-understanding-strip-and-list-comprehensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Understanding .strip() and list comprehensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-exercises-3233-embeddings-and-cosine-similarity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Exercises 32–33: Embeddings and cosine similarity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Exercises 32–33: Embeddings and cosine similarity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-my-first-embedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 My first embedding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-implementing-cosine-similarity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Implementing cosine similarity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-exercises-3436-semantic-retrieval-from-my-document" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Exercises 34–36: Semantic retrieval from my document
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-exercises-3738-top-k-retrieval-and-its-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Exercises 37–38: Top-K retrieval and its limits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-exercises-3942-chunking-changes-what-the-model-can-retrieve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Exercises 39–42: Chunking changes what the model can retrieve
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Exercises 39–42: Chunking changes what the model can retrieve">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-splitting-by-paragraphs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Splitting by paragraphs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-combining-paragraphs-that-belong-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Combining paragraphs that belong together
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-exercise-43-writing-an-automatic-paragraph-chunker-from-scratch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Exercise 43: Writing an automatic paragraph chunker from scratch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Exercise 43: Writing an automatic paragraph chunker from scratch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-testing-with-a-smaller-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Testing with a smaller limit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-exercise-44-turning-semantic-retrieval-into-a-reusable-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Exercise 44: Turning semantic retrieval into a reusable function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-exercise-45-my-first-retrieval-evaluation-suite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Exercise 45: My first retrieval evaluation suite
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Exercise 45: My first retrieval evaluation suite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-the-failed-test-is-more-useful-than-it-first-looks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1 The failed test is more useful than it first looks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-limits-of-the-current-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2 Limits of the current evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-lessons-about-engineering-not-just-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Lessons about engineering, not just AI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-what-i-can-build-nowand-what-i-still-cannot-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. What I can build now—and what I still cannot claim
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. What I can build now—and what I still cannot claim">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-a-tool-calling-energy-analyst-with-deterministic-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. A tool-calling energy analyst with deterministic checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-a-semantic-rag-pipeline-with-basic-retrieval-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. A semantic RAG pipeline with basic retrieval evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Next steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-takeaway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final takeaway
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="from-evaluated-ai-agents-to-semantic-rag-building-systems-i-can-actually-test">From Evaluated AI Agents to Semantic RAG: Building Systems I Can Actually Test</h1>
+<p><em>October 20, 2026</em></p>
+<p>In my <a href="../from-apis-to-ai-agents/">previous note</a>, I described how I turned a solar generation API into a tool-calling AI agent. I had connected a local Qwen model to Python functions and SQLite, learned to maintain the conversation history, and built a bounded agent loop. More importantly, I had discovered that <strong>a model can retrieve the correct data and still explain it incorrectly</strong>.</p>
+<p>Since then, I have worked through <strong>Exercises 23–45</strong>. This phase had two main parts:</p>
+<ol>
+<li>Making my AI agent's conclusions <strong>structured, independently evaluated, and gated before display</strong>.</li>
+<li>Building a <strong>retrieval-augmented generation (RAG)</strong> pipeline, moving from basic keyword matching to embeddings, semantic search, chunking, and automated retrieval tests.</li>
+</ol>
+<p>The biggest change in how I think about AI engineering is that I no longer consider a plausible answer to be enough. I want to know <strong>what evidence the system had, why it retrieved that evidence, what claims it made, and whether those claims passed a test</strong>.</p>
+<p>This entry is longer than my usual notes because I want to preserve the actual implementations, mistakes, numerical results, and lessons from the exercises. The examples come from my local learning project, not a production deployment.</p>
+<hr />
+<h2 id="1-starting-point-a-working-agent-with-a-reliability-problem">1. Starting point: a working agent with a reliability problem</h2>
+<p>The project is my <strong>Solar Plant AI Analyst</strong>, running locally on my Mac. The relevant stack includes:</p>
+<ul>
+<li><strong>Python</strong> for application logic and deterministic calculations.</li>
+<li><strong>SQLite</strong> for sample solar generation data.</li>
+<li><strong>Ollama + <code>qwen3.5:9b</code></strong> for reasoning, tool selection, and natural-language explanations.</li>
+<li><strong>Pydantic</strong> for structured responses.</li>
+<li>Later, <strong><code>nomic-embed-text</code></strong> for embeddings and semantic retrieval.</li>
+</ul>
+<p>The agent already knew how to execute two Python tools:</p>
+<pre><code class="language-python">available_tools = {
+    &quot;get_plant_history&quot;: get_plant_history,
+    &quot;find_record_db&quot;: find_record_db,
+}
+</code></pre>
+<p>It could ask for historical generation data, inspect a particular date, and summarize the findings. I also had a <code>MAX_ROUNDS = 5</code> limit to prevent unbounded model/tool loops.</p>
+<p>My example database contained three Caucaia records:</p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th style="text-align: right;">Actual generation</th>
+<th style="text-align: right;">Expected generation</th>
+<th>Correct classification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-10-14</td>
+<td style="text-align: right;">76 MWh</td>
+<td style="text-align: right;">100 MWh</td>
+<td>Below expected</td>
+</tr>
+<tr>
+<td>2026-10-15</td>
+<td style="text-align: right;">89 MWh</td>
+<td style="text-align: right;">95 MWh</td>
+<td>Below expected</td>
+</tr>
+<tr>
+<td>2026-10-16</td>
+<td style="text-align: right;">100 MWh</td>
+<td style="text-align: right;">98 MWh</td>
+<td>Above expected</td>
+</tr>
+</tbody>
+</table>
+<p>Python could correctly calculate that generation had increased from <strong>76 to 100 MWh</strong> across the available records. But Qwen had previously reversed the trend, confused units, invented broader date ranges, and made unsupported operational conclusions.</p>
+<p>So the next question was: <strong>How can I automatically detect when the model's answer disagrees with the data?</strong></p>
+<hr />
+<h2 id="2-exercises-2324-structured-claims-and-an-independent-trend-evaluator">2. Exercises 23–24: Structured claims and an independent trend evaluator</h2>
+<h3 id="21-defining-an-answer-contract-with-pydantic">2.1 Defining an answer contract with Pydantic</h3>
+<p>I started by creating a Pydantic model describing the claims I wanted to verify:</p>
+<pre><code class="language-python">from pydantic import BaseModel
+from typing import Literal
+
+
+class AgentClaims(BaseModel):
+    trend: Literal[
+        &quot;increasing&quot;,
+        &quot;decreasing&quot;,
+        &quot;stable&quot;,
+        &quot;insufficient_data&quot;,
+    ]
+
+    performance_by_date: dict[
+        str,
+        Literal[&quot;above_expected&quot;, &quot;below_expected&quot;, &quot;on_target&quot;],
+    ]
+
+    summary: str
+</code></pre>
+<p>This gave me a machine-readable representation of the final answer:</p>
+<pre><code class="language-json">{
+  &quot;trend&quot;: &quot;increasing&quot;,
+  &quot;performance_by_date&quot;: {
+    &quot;2026-10-14&quot;: &quot;below_expected&quot;,
+    &quot;2026-10-15&quot;: &quot;below_expected&quot;,
+    &quot;2026-10-16&quot;: &quot;above_expected&quot;
+  },
+  &quot;summary&quot;: &quot;Generation increased from October 14 to October 16.&quot;
+}
+</code></pre>
+<p>Instead of trying to parse arbitrary prose to determine whether Qwen claimed a trend was increasing, I could read <code>claims.trend</code> directly.</p>
+<p>There are three Pydantic methods I wanted to remember:</p>
+<pre><code class="language-python">AgentClaims.model_json_schema()
+# Returns a JSON Schema describing the allowed output structure.
+
+claims = AgentClaims.model_validate_json(json_text)
+# Parses a JSON string and validates it into a Pydantic model.
+
+claims.model_dump()
+# Returns a Python dictionary containing the model's fields.
+</code></pre>
+<p>I also used <code>claims.model_dump_json()</code> when thinking about the difference between a Python dictionary and a JSON string.</p>
+<p><strong>One mistake I made:</strong> my first <code>AgentClaims</code> class included only <code>trend</code>. Qwen returned:</p>
+<pre><code class="language-python">{&quot;trend&quot;: &quot;increasing&quot;}
+</code></pre>
+<p>Initially, I wondered why the other fields were missing. The model wasn't necessarily ignoring the schema: <strong>I had accidentally defined an incomplete schema</strong>.</p>
+<p>These two debugging statements exposed the problem:</p>
+<pre><code class="language-python">print(AgentClaims.model_json_schema())
+print(AgentClaims.model_fields.keys())
+</code></pre>
+<p>Once I added the missing fields, the schema correctly required <code>trend</code>, <code>performance_by_date</code>, and <code>summary</code>, and Qwen returned all three.</p>
+<p><strong>Lesson:</strong> Schema enforcement does not protect an application against an incorrectly designed schema. It enforces what the developer specified, including developer mistakes.</p>
+<h3 id="22-requesting-structured-output-from-ollama">2.2 Requesting structured output from Ollama</h3>
+<p>After the tool-calling portion of the agent finished, I made a separate Ollama call asking for the result in the <code>AgentClaims</code> format:</p>
+<pre><code class="language-python">structured_response = chat(
+    model=&quot;qwen3.5:9b&quot;,
+    messages=messages + [{
+        &quot;role&quot;: &quot;user&quot;,
+        &quot;content&quot;: (
+            &quot;Using the retrieved data, return the trend, &quot;
+            &quot;performance_by_date, and a short summary. &quot;
+            &quot;Include only dates present in the data.&quot;
+        ),
+    }],
+    format=AgentClaims.model_json_schema(),
+    think=False,
+)
+
+claims = AgentClaims.model_validate_json(
+    structured_response.message.content
+)
+</code></pre>
+<p>At this stage, the model still generated the claims. Pydantic only checked that the resulting values and types conformed to the declared structure.</p>
+<p><strong>Structural validity and factual correctness are different tests.</strong> A valid <code>"decreasing"</code> value could still be factually wrong for Caucaia.</p>
+<h3 id="23-calculating-ground-truth-separately">2.3 Calculating ground truth separately</h3>
+<p>I kept objective calculations in Python rather than delegating them to Qwen:</p>
+<pre><code class="language-python">def calculate_trends(records):
+    if len(records) &lt; 2:
+        return &quot;insufficient_data&quot;
+
+    chronological = sorted(records, key=lambda row: row[&quot;date&quot;])
+    first = chronological[0]
+    last = chronological[-1]
+
+    change_mwh = last[&quot;actual_mwh&quot;] - first[&quot;actual_mwh&quot;]
+
+    if change_mwh &gt; 0:
+        return &quot;increasing&quot;
+    elif change_mwh &lt; 0:
+        return &quot;decreasing&quot;
+    return &quot;stable&quot;
+
+
+def classify_performance(record):
+    deviation_mwh = record[&quot;actual_mwh&quot;] - record[&quot;expected_mwh&quot;]
+
+    if deviation_mwh &gt; 0:
+        return &quot;above_expected&quot;
+    elif deviation_mwh &lt; 0:
+        return &quot;below_expected&quot;
+    return &quot;on_target&quot;
+</code></pre>
+<p>For Caucaia, this gives:</p>
+<pre><code class="language-python">verified_trend = &quot;increasing&quot;
+
+verified_performance = {
+    &quot;2026-10-16&quot;: &quot;above_expected&quot;,
+    &quot;2026-10-15&quot;: &quot;below_expected&quot;,
+    &quot;2026-10-14&quot;: &quot;below_expected&quot;,
+}
+</code></pre>
+<p>An important nuance: my trend function compares the <strong>earliest and latest available values</strong>. It does <em>not</em> prove that each intermediate observation increases monotonically, establish a statistically significant trend, or explain why generation changed.</p>
+<h3 id="24-testing-a-claim-against-ground-truth">2.4 Testing a claim against ground truth</h3>
+<p>My first automatic check was simple:</p>
+<pre><code class="language-python">trend_passed = claims.trend == verified_trend
+</code></pre>
+<p>I initially forgot to update <code>verified_trend</code> after calculating <code>trend</code>. It remained <code>None</code>, so every comparison failed, regardless of the model's answer. That was a state-management bug, not a model-quality problem.</p>
+<p>The fix was to preserve the value when the historical-data tool returned:</p>
+<pre><code class="language-python">trend = calculate_trends(records)
+verified_trend = trend
+</code></pre>
+<p>I deliberately changed a valid claim to <code>"decreasing"</code> and verified that the evaluation failed. This was my first small <strong>negative test</strong>: I wasn't just checking that correct behavior passed; I was proving that an incorrect claim could be detected.</p>
+<hr />
+<h2 id="3-exercises-2526-evaluating-every-date-and-rejecting-failed-answers">3. Exercises 25–26: Evaluating every date and rejecting failed answers</h2>
+<h3 id="31-checking-a-dictionary-of-daily-classifications">3.1 Checking a dictionary of daily classifications</h3>
+<p>I extended the evaluation from one trend to all three dates:</p>
+<pre><code class="language-python">verified_performance = {
+    row[&quot;date&quot;]: classify_performance(row)
+    for row in records
+}
+
+performance_passed = (
+    claims.performance_by_date == verified_performance
+)
+</code></pre>
+<p>Python dictionaries compare by <strong>keys and values, not insertion order</strong>. This made it possible to detect not only wrong classifications, but also missing or unexpected dates.</p>
+<p>I tested a deliberate mistake:</p>
+<pre><code class="language-python">claims.performance_by_date[&quot;2026-10-15&quot;] = &quot;above_expected&quot;
+</code></pre>
+<p>The trend still passed, but the daily performance comparison failed. That is exactly what I wanted: <strong>a narrowly defined check that can detect a specific error</strong>.</p>
+<h3 id="32-detecting-errors-is-not-the-same-as-blocking-them">3.2 Detecting errors is not the same as blocking them</h3>
+<p>My next mistake was subtler. I had code that calculated the evaluation results and then printed the structured answer <strong>before</strong> checking whether the evaluation passed:</p>
+<pre><code class="language-python">trend_passed = claims.trend == verified_trend
+performance_passed = claims.performance_by_date == verified_performance
+
+print(claims.model_dump())  # Oops: always displayed.
+
+if trend_passed and performance_passed:
+    print(&quot;EVALUATION PASSED&quot;)
+else:
+    print(&quot;EVALUATION FAILED&quot;)
+</code></pre>
+<p>I asked why the print was considered premature, since it appeared <em>after</em> the comparisons. I realized the distinction:</p>
+<ul>
+<li><strong>Evaluation computation:</strong> Calculate whether the result is valid.</li>
+<li><strong>Output gating:</strong> Use that result to decide whether the answer is allowed to reach the user.</li>
+</ul>
+<p>The corrected logic was:</p>
+<pre><code class="language-python">if (
+    verified_trend is not None
+    and verified_performance is not None
+    and trend_passed
+    and performance_passed
+):
+    print(&quot;EVALUATION PASSED&quot;)
+    print(claims.model_dump())
+else:
+    print(&quot;EVALUATION FAILED&quot;)
+    print(&quot;Answer rejected due to factual inconsistencies.&quot;)
+</code></pre>
+<p>This pattern is often called <strong>fail-closed validation</strong>: if a required check is missing or fails, the system does not present the answer as verified.</p>
+<p>I also learned to print <strong><code>claims.model_dump()</code></strong>, the validated structured answer, instead of mistakenly printing <code>response.message.content</code>, which referred to a different model response in the agent loop.</p>
+<p>Another bug I encountered was indentation: I accidentally placed <code>messages.append(...)</code> inside the <code>else</code> branch for one tool. That meant results from <code>get_plant_history()</code> were sometimes not returned to Qwen. I moved the append operation outside the tool-specific branches so <strong>every executed tool sends a corresponding result message</strong>.</p>
+<p><strong>What this evaluation does <em>not</em> guarantee:</strong> the free-text <code>summary</code> can still contain an unsupported inference even when <code>trend</code> and <code>performance_by_date</code> both pass. My evaluator verifies only the facts for which I wrote explicit checks.</p>
+<hr />
+<h2 id="4-exercise-27-validating-arguments-the-llm-sends-to-python">4. Exercise 27: Validating arguments the LLM sends to Python</h2>
+<p>In earlier runs, Qwen requested <code>get_plant_history()</code> with limits such as <code>30</code> and <code>50</code>, even though my toy database held only three records.</p>
+<p>There is a more general security problem here: <strong>model-generated tool arguments are untrusted inputs</strong>. If a model can call a function, I must still control what values that function accepts.</p>
+<p>I added validation before execution:</p>
+<pre><code class="language-python">if function_name == &quot;get_plant_history&quot;:
+    limit = arguments.get(&quot;limit&quot;, 7)
+
+    if type(limit) is not int:
+        raise ValueError(&quot;Limit is not an integer&quot;)
+    elif limit &lt;= 0:
+        raise ValueError(&quot;Limit must be positive&quot;)
+    elif limit &gt; 30:
+        limit = 30
+
+    arguments[&quot;limit&quot;] = limit
+
+records = function(**arguments)
+</code></pre>
+<p>The rules were:</p>
+<table>
+<thead>
+<tr>
+<th>Requested limit</th>
+<th>Application behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>7</code></td>
+<td>Accept 7</td>
+</tr>
+<tr>
+<td><code>50</code></td>
+<td>Cap at 30</td>
+</tr>
+<tr>
+<td><code>1_000_000</code></td>
+<td>Cap at 30</td>
+</tr>
+<tr>
+<td><code>-5</code> or <code>0</code></td>
+<td>Reject</td>
+</tr>
+<tr>
+<td><code>"many"</code></td>
+<td>Reject</td>
+</tr>
+</tbody>
+</table>
+<p>Two Python details were new or useful to revisit:</p>
+<pre><code class="language-python">arguments.get(&quot;limit&quot;, 7)
+</code></pre>
+<p>This reads the key if present, or returns the <strong>default value <code>7</code></strong> if missing. It does not use <code>7</code> when the key exists with a value of <code>None</code>.</p>
+<p>And:</p>
+<pre><code class="language-python">arguments[&quot;limit&quot;] = limit
+</code></pre>
+<p>This is the correct way to update a dictionary. I initially tried <code>arguments.limit = limit</code>, treating the dictionary like an object attribute.</p>
+<p>I also reversed my first <code>isinstance()</code> check by mistake. <code>isinstance(limit, int)</code> is <strong>true for integers</strong>, not for values that aren't integers. Using <code>type(limit) is not int</code> also avoids accepting <code>True</code> or <code>False</code>, which are subclasses of <code>int</code> in Python.</p>
+<p>For this exercise, raising <code>ValueError</code> was enough. In a production agent, I would need a controlled error response and recovery behavior instead of letting bad arguments crash the process.</p>
+<p><strong>My rule now:</strong> The LLM can <em>propose</em> actions, but application code enforces permission, validation, resource limits, and execution.</p>
+<hr />
+<h2 id="5-exercises-2831-my-first-document-based-rag-pipeline">5. Exercises 28–31: My first document-based RAG pipeline</h2>
+<p>After the agent evaluations, I started learning <strong>Retrieval-Augmented Generation (RAG)</strong>.</p>
+<p>My original agent could calculate <em>how far below target</em> a solar plant generated, but it did not have operational documents that explained what should be investigated. A generation shortfall alone cannot determine whether the problem was weather, equipment, curtailment, or measurement quality.</p>
+<p>I created:</p>
+<pre><code class="language-text">knowledge/
+└── solar_operations.txt
+</code></pre>
+<p>The sample document included this guidance:</p>
+<pre><code class="language-text">Solar Plant Operations Guide
+
+When actual generation is below expected generation,
+investigate the following possible factors:
+
+1. Solar irradiance below forecast.
+2. Inverter faults or equipment outages.
+3. Grid curtailment or disconnection.
+4. Incorrect meter readings or missing data.
+
+Generation measurements alone cannot establish
+which factor caused an underperformance event.
+
+Always examine operational logs and weather data
+before assigning a root cause.
+</code></pre>
+<p>This is <strong>demonstration documentation</strong>, not a record establishing what actually happened at Caucaia.</p>
+<h3 id="51-reading-documents-with-python">5.1 Reading documents with Python</h3>
+<p>I first read it with the standard library:</p>
+<pre><code class="language-python">from pathlib import Path
+
+document = Path(&quot;knowledge/solar_operations.txt&quot;).read_text(
+    encoding=&quot;utf-8&quot;
+)
+</code></pre>
+<p>Then I built a keyword retriever:</p>
+<pre><code class="language-python">def retrieve_information(query, document):
+    matches = []
+
+    for line in document.splitlines():
+        if query.lower() in line.lower():
+            matches.append(line)
+
+    return matches
+</code></pre>
+<p>For <code>query = "inverter"</code>, the result was:</p>
+<pre><code class="language-python">[&quot;2. Inverter faults or equipment outages.&quot;]
+</code></pre>
+<p>For <code>query = "battery"</code>, it returned an empty list.</p>
+<p>I passed the matching text into Qwen as context, along with a system instruction:</p>
+<pre><code class="language-python">from ollama import chat
+
+context = &quot;\n&quot;.join(retrieve_information(query, document))
+
+response = chat(
+    model=&quot;qwen3.5:9b&quot;,
+    messages=[
+        {
+            &quot;role&quot;: &quot;system&quot;,
+            &quot;content&quot;: (
+                &quot;Answer using only the provided context. &quot;
+                &quot;If the context is insufficient, say so.&quot;
+            ),
+        },
+        {
+            &quot;role&quot;: &quot;user&quot;,
+            &quot;content&quot;: f&quot;Context:\n{context}\n\nQuestion: {question}&quot;,
+        },
+    ],
+    think=False,
+)
+</code></pre>
+<p>With inverter context, Qwen answered from the matching line. When the context was empty, it said there was insufficient information to answer using that context.</p>
+<p>That was my first basic RAG pipeline:</p>
+<pre><code class="language-text">Question → Keyword retrieval → Retrieved text → Qwen → Answer
+</code></pre>
+<p>A detail I noticed later: when I changed the search term to <code>battery</code>, I had initially left the actual user question about inverters. That is fine as a mechanical test of empty retrieval, but in a real application the search query needs to reflect the user's information need.</p>
+<h3 id="52-understanding-strip-and-list-comprehensions">5.2 Understanding <code>.strip()</code> and list comprehensions</h3>
+<p>I was initially confused by this pattern:</p>
+<pre><code class="language-python">lines = [
+    line.strip()
+    for line in document.splitlines()
+    if line.strip()
+]
+</code></pre>
+<p>The key concepts:</p>
+<ul>
+<li><code>document.splitlines()</code> breaks the text into lines.</li>
+<li><code>.strip()</code> removes leading and trailing whitespace.</li>
+<li><code>if line.strip()</code> keeps only lines that still have content after stripping.</li>
+<li>An empty string <code>""</code> is <strong>falsy</strong> in a Python condition, while a nonempty string is truthy.</li>
+</ul>
+<p>This is equivalent to:</p>
+<pre><code class="language-python">lines = []
+
+for line in document.splitlines():
+    if line.strip():
+        lines.append(line.strip())
+</code></pre>
+<p>I found it helpful to learn both forms. The compact syntax is convenient once I understand the underlying loop.</p>
+<hr />
+<h2 id="6-exercises-3233-embeddings-and-cosine-similarity">6. Exercises 32–33: Embeddings and cosine similarity</h2>
+<p>Keyword matching works only when the same word or substring appears in the document. A user might instead ask:</p>
+<blockquote>
+<p>What could cause the electrical equipment to malfunction?</p>
+</blockquote>
+<p>That should be related to an inverter failure, even without the word <em>inverter</em> in the question.</p>
+<p>To search by meaning, I installed a local embedding model:</p>
+<pre><code class="language-bash">ollama pull nomic-embed-text
+</code></pre>
+<p>I learned to distinguish the two local models:</p>
+<ul>
+<li><strong><code>qwen3.5:9b</code></strong>: a generative language model that produces explanations and tool requests.</li>
+<li><strong><code>nomic-embed-text</code></strong>: an embedding model that converts text into numerical vectors.</li>
+</ul>
+<h3 id="61-my-first-embedding">6.1 My first embedding</h3>
+<pre><code class="language-python">from ollama import embed
+
+response = embed(
+    model=&quot;nomic-embed-text&quot;,
+    input=&quot;The solar inverter stopped working.&quot;,
+)
+
+vector = response.embeddings[0]
+
+print(&quot;Dimensions:&quot;, len(vector))
+print(&quot;First 10 numbers:&quot;, vector[:10])
+</code></pre>
+<p>My output had <strong>768 dimensions</strong>. Its first ten values were:</p>
+<pre><code class="language-python">[
+    0.033074096, 0.015128775, -0.15546928,
+    -0.007262079, 0.048863318, 0.032965176,
+    0.018885838, 0.027871432, -0.010051456,
+    -0.037584938,
+]
+</code></pre>
+<p>An individual dimension is not something I should interpret as a direct label such as <em>fault probability</em>. What matters for retrieval is how the complete vector relates to other vectors generated by the same embedding model.</p>
+<h3 id="62-implementing-cosine-similarity">6.2 Implementing cosine similarity</h3>
+<p>I implemented the similarity function myself:</p>
+<pre><code class="language-python">import math
+
+
+def cosine_similarity(a, b):
+    dot_product = sum(x * y for x, y in zip(a, b))
+    length_a = math.hypot(*a)
+    length_b = math.hypot(*b)
+
+    return dot_product / (length_a * length_b)
+</code></pre>
+<p>This computes the dot product of two vectors and divides it by the product of their magnitudes:</p>
+<p>[
+\operatorname{cosine_similarity}(A, B)
+= \frac{A \cdot B}{|A|\,|B|}
+]</p>
+<p>I learned that <code>math.hypot(*a)</code> can calculate the Euclidean magnitude of a vector; <code>*a</code> unpacks the list into positional arguments.</p>
+<p>I compared sentence pairs:</p>
+<table>
+<thead>
+<tr>
+<th>Pair</th>
+<th style="text-align: right;">Approximate cosine similarity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“The solar inverter stopped working.” vs. “The electrical equipment failed.”</td>
+<td style="text-align: right;"><strong>0.65</strong></td>
+</tr>
+<tr>
+<td>“The solar inverter stopped working.” vs. “I love eating pizza.”</td>
+<td style="text-align: right;"><strong>0.25</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The equipment-related sentences aligned much more closely than the unrelated pizza sentence.</p>
+<p><strong>A cosine similarity score is not a probability</strong>. <code>0.65</code> does not mean “65% of the words match” or “65% chance the statements are equivalent.” It's a geometric measure of vector alignment.</p>
+<p>The exercise implementation assumes vectors have equal length and nonzero magnitude. A reusable production helper should validate those conditions.</p>
+<hr />
+<h2 id="7-exercises-3436-semantic-retrieval-from-my-document">7. Exercises 34–36: Semantic retrieval from my document</h2>
+<p>I embedded every nonempty line of <code>solar_operations.txt</code>. There were <strong>11 lines and 11 embeddings</strong>.</p>
+<p>Then I embedded a question:</p>
+<blockquote>
+<p>What could cause the electrical equipment to malfunction?</p>
+</blockquote>
+<p>One approach I discovered was to make a <strong>single embedding call</strong> with the document lines plus the question appended at the end:</p>
+<pre><code class="language-python">response = embed(
+    model=&quot;nomic-embed-text&quot;,
+    input=lines + [question],
+)
+
+question_vector = response.embeddings[-1]
+document_vectors = response.embeddings[:-1]
+</code></pre>
+<p>Using <code>[-1]</code> selected the question vector; using <code>[:-1]</code> selected all preceding document vectors.</p>
+<p>I then calculated similarity against each document line:</p>
+<pre><code class="language-python">scores = [
+    cosine_similarity(question_vector, vector)
+    for vector in document_vectors
+]
+
+best_score = max(scores)
+best_index = scores.index(best_score)
+best_line = lines[best_index]
+</code></pre>
+<p>My actual top result was:</p>
+<pre><code class="language-text">Best match: 2. Inverter faults or equipment outages.
+Similarity: 0.7697420295142356
+</code></pre>
+<p><strong>This was the moment semantic retrieval clicked for me.</strong> I hadn't searched for the literal word <code>inverter</code>; I had asked about malfunctioning electrical equipment, and the relevant passage ranked first.</p>
+<p>I passed that retrieved line to Qwen. Its answer was straightforward:</p>
+<blockquote>
+<p>Inverter faults or equipment outages could cause the electrical equipment to malfunction.</p>
+</blockquote>
+<p>So my pipeline became:</p>
+<pre><code class="language-text">Question
+   ↓
+Embedding model
+   ↓
+Compare question vector with document vectors
+   ↓
+Retrieve the best passage
+   ↓
+Qwen answers using the passage
+</code></pre>
+<p>There is an architectural improvement I want to make later: document embeddings should normally be computed <strong>once when documents are indexed</strong>, not recomputed for every user question.</p>
+<hr />
+<h2 id="8-exercises-3738-top-k-retrieval-and-its-limits">8. Exercises 37–38: Top-K retrieval and its limits</h2>
+<p>A single passage might not contain enough evidence for a complex question. I therefore ranked all candidates and selected the most relevant <code>K</code> passages.</p>
+<pre><code class="language-python">pairs = list(zip(scores, lines))
+ranked = sorted(pairs, reverse=True)
+top_3 = ranked[:3]
+</code></pre>
+<p><code>zip(scores, lines)</code> pairs each numerical score with the exact passage it belongs to. Sorting the pairs descending ranks the results by similarity.</p>
+<p>For the equipment-malfunction question, the top three were:</p>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th style="text-align: right;">Score</th>
+<th>Passage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td style="text-align: right;">0.7697</td>
+<td>Inverter faults or equipment outages</td>
+</tr>
+<tr>
+<td>2</td>
+<td style="text-align: right;">0.6364</td>
+<td>Investigate the following possible factors</td>
+</tr>
+<tr>
+<td>3</td>
+<td style="text-align: right;">0.5962</td>
+<td>Incorrect meter readings or missing data</td>
+</tr>
+</tbody>
+</table>
+<p>I then combined the retrieved passages:</p>
+<pre><code class="language-python">context = &quot;\n&quot;.join(line for score, line in top_3)
+</code></pre>
+<p>The resulting answer included inverter faults but also mentioned meter-reading problems. That answer was consistent with the retrieved document, but it illustrated a subtle issue: <strong>incorrect meter readings may explain an apparent production discrepancy, not a physical equipment malfunction</strong>.</p>
+<p>More retrieved text can offer useful context, but it also gives the model more opportunities to conflate related ideas.</p>
+<p>Another practical lesson: I originally imported my cosine similarity helper from a previous exercise script:</p>
+<pre><code class="language-python">from exercise_32_embeddings import cosine_similarity
+</code></pre>
+<p>An unrelated line appeared in the terminal:</p>
+<pre><code class="language-text">Cosine similarity: 0.2581198229626706
+</code></pre>
+<p>That output likely came from <strong>top-level code executing during import</strong>. Python doesn't import only the requested function; it executes the imported module's top-level statements. A cleaner approach is to move reusable helpers into a dedicated <code>similarity_utils.py</code>, or guard demonstration code with <code>if __name__ == "__main__":</code>.</p>
+<hr />
+<h2 id="9-exercises-3942-chunking-changes-what-the-model-can-retrieve">9. Exercises 39–42: Chunking changes what the model can retrieve</h2>
+<p>Line-by-line retrieval had another problem: some lines were meaningless without their neighbors.</p>
+<p>For instance:</p>
+<pre><code class="language-text">investigate the following possible factors:
+</code></pre>
+<p>That line may be semantically similar to a question but does not actually list the factors.</p>
+<h3 id="91-splitting-by-paragraphs">9.1 Splitting by paragraphs</h3>
+<p>I tried paragraph chunking:</p>
+<pre><code class="language-python">chunks = [
+    paragraph.strip()
+    for paragraph in document.split(&quot;\n\n&quot;)
+    if paragraph.strip()
+]
+</code></pre>
+<p>The document became five chunks:</p>
+<ol>
+<li>Document title.</li>
+<li>Introductory sentence about below-expected generation.</li>
+<li>List of four possible causes.</li>
+<li>Warning that generation measurements cannot establish root cause.</li>
+<li>Instruction to examine logs and weather data.</li>
+</ol>
+<p>For the question:</p>
+<blockquote>
+<p>What could cause a solar plant to generate less energy than expected?</p>
+</blockquote>
+<p>The initial five-chunk search produced:</p>
+<table>
+<thead>
+<tr>
+<th>Chunk</th>
+<th>Content</th>
+<th style="text-align: right;">Similarity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Title</td>
+<td style="text-align: right;">0.6408</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Introduction</td>
+<td style="text-align: right;"><strong>0.7117</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Actual list of possible causes</td>
+<td style="text-align: right;">0.6797</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Root-cause uncertainty</td>
+<td style="text-align: right;">0.6811</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Operational investigation guidance</td>
+<td style="text-align: right;">0.5068</td>
+</tr>
+</tbody>
+</table>
+<p>The best-matching chunk contained an introduction, <strong>not the answer</strong>. The list of causes ranked third, so Top-2 retrieval would have omitted it.</p>
+<p>This was an important discovery: <strong>the most semantically similar passage is not always the most useful passage</strong>.</p>
+<h3 id="92-combining-paragraphs-that-belong-together">9.2 Combining paragraphs that belong together</h3>
+<p>I manually merged the introduction and the list:</p>
+<pre><code class="language-python">combined_chunk = chunks[1] + &quot;\n&quot; + chunks[2]
+
+improved_chunks = [
+    chunks[0],
+    combined_chunk,
+    chunks[3],
+    chunks[4],
+]
+</code></pre>
+<p>I first made a mistake: my output displayed the new chunks but still showed the <strong>old five similarity scores</strong>. I'd updated the text list without recomputing the embeddings.</p>
+<p>That bug was particularly dangerous because it could silently pair a score with the <strong>wrong</strong> chunk. I learned to verify alignment:</p>
+<pre><code class="language-python">assert len(improved_chunks) == len(similarity)
+</code></pre>
+<p>After re-embedding the four improved chunks, the scores became:</p>
+<pre><code class="language-python">[0.6408397720797566,
+ 0.7625469876509202,
+ 0.6810598030678585,
+ 0.5068038903899994]
+</code></pre>
+<p>The merged cause-list chunk ranked first, with similarity <strong>0.7625</strong>, up from <strong>0.7117</strong> for the old top-ranked introductory chunk.</p>
+<p>More importantly, it now contained <strong>the information required to answer</strong>:</p>
+<pre><code class="language-text">When actual generation is below expected generation,
+investigate the following possible factors:
+1. Solar irradiance below forecast.
+2. Inverter faults or equipment outages.
+3. Grid curtailment or disconnection.
+4. Incorrect meter readings or missing data.
+</code></pre>
+<p>I retrieved the top two chunks and sent both to Qwen. It correctly listed the possible causes without asserting that any specific cause had occurred at Caucaia.</p>
+<p>I still want to improve answer quality: retrieving the root-cause caution does not force Qwen to mention that caution in its final answer.</p>
+<hr />
+<h2 id="10-exercise-43-writing-an-automatic-paragraph-chunker-from-scratch">10. Exercise 43: Writing an automatic paragraph chunker from scratch</h2>
+<p>Manual chunk-merging works on a tiny document, but it doesn't scale. I therefore implemented an algorithm to group paragraphs until the next paragraph would exceed a character limit.</p>
+<p>I started with an incorrect version that <strong>added a paragraph first and checked the length afterward</strong>. The first chunk grew to <strong>384 characters</strong> despite a maximum of 300.</p>
+<p>Then I moved the check earlier but accidentally duplicated paragraphs by doing both <code>chunk = line</code> and <code>chunk += line</code> in the same iteration.</p>
+<p>The corrected algorithm checks a <strong>candidate</strong> before committing to it:</p>
+<pre><code class="language-python">def chunk_document(text: str, max_chars: int = 300) -&gt; list[str]:
+    if max_chars &lt;= 0:
+        raise ValueError(&quot;max_chars must be positive&quot;)
+
+    paragraphs = [
+        paragraph.strip()
+        for paragraph in text.split(&quot;\n\n&quot;)
+        if paragraph.strip()
+    ]
+
+    chunks = []
+    current = &quot;&quot;
+
+    for paragraph in paragraphs:
+        candidate = current + &quot;\n\n&quot; + paragraph if current else paragraph
+
+        if len(candidate) &gt; max_chars and current:
+            chunks.append(current)
+            current = paragraph
+        else:
+            current = candidate
+
+    if current:
+        chunks.append(current)
+
+    return chunks
+</code></pre>
+<p>The central logic is:</p>
+<pre><code class="language-python">candidate = current + &quot;\n\n&quot; + paragraph if current else paragraph
+</code></pre>
+<p><code>candidate</code> is a <strong>hypothetical</strong> future chunk. If it's too large, I save the current chunk and start a new one with the incoming paragraph. I do <strong>not</strong> save the oversized candidate.</p>
+<p>I spent time understanding why this condition matters:</p>
+<pre><code class="language-python">if len(candidate) &gt; max_chars and current:
+</code></pre>
+<p>The <code>and current</code> prevents appending an empty chunk if the first paragraph is already longer than the limit.</p>
+<p>Another key edge case: a <strong>single paragraph longer than <code>max_chars</code></strong> is allowed as one oversized chunk. That was the stated policy of this exercise; splitting an oversized paragraph into sentences or words would be a separate requirement.</p>
+<h3 id="101-testing-with-a-smaller-limit">10.1 Testing with a smaller limit</h3>
+<p>I tested with <code>max_chars = 100</code> and got:</p>
+<table>
+<thead>
+<tr>
+<th>Chunk</th>
+<th style="text-align: right;">Characters</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td style="text-align: right;">28</td>
+<td>Title</td>
+</tr>
+<tr>
+<td>1</td>
+<td style="text-align: right;">96</td>
+<td>Introduction</td>
+</tr>
+<tr>
+<td>2</td>
+<td style="text-align: right;"><strong>159</strong></td>
+<td>Four possible causes</td>
+</tr>
+<tr>
+<td>3</td>
+<td style="text-align: right;">93</td>
+<td>Root-cause warning</td>
+</tr>
+<tr>
+<td>4</td>
+<td style="text-align: right;">79</td>
+<td>Logs and weather guidance</td>
+</tr>
+</tbody>
+</table>
+<p>The 159-character chunk is <strong>valid under my current policy</strong> because its paragraph already exceeds 100 characters. All other chunks stayed within the limit.</p>
+<p>This exercise was less about AI and more about practical software engineering: testing the limits <em>before</em> mutation, avoiding duplication, handling empty inputs, and respecting an explicit contract.</p>
+<p>It also revealed a tension: smaller chunks may be easier to rank precisely, but they can separate an explanation from its evidence. Good chunking is about preserving meaning, not only satisfying a size constraint.</p>
+<hr />
+<h2 id="11-exercise-44-turning-semantic-retrieval-into-a-reusable-function">11. Exercise 44: Turning semantic retrieval into a reusable function</h2>
+<p>I combined the embedding, similarity, and ranking logic into <code>retrieve_top_k()</code>.</p>
+<p>An educational version of the final function is:</p>
+<pre><code class="language-python">from ollama import embed
+
+
+def retrieve_top_k(question, chunks, k=2):
+    if not chunks or k &lt;= 0:
+        return []
+
+    response = embed(
+        model=&quot;nomic-embed-text&quot;,
+        input=chunks + [question],
+    )
+
+    chunk_vectors = response.embeddings[:-1]
+    question_vector = response.embeddings[-1]
+
+    similarities = [
+        cosine_similarity(question_vector, vector)
+        for vector in chunk_vectors
+    ]
+
+    ranked = sorted(
+        zip(similarities, chunks),
+        reverse=True,
+    )
+
+    top_k = ranked[:k]
+    return [chunk for score, chunk in top_k]
+</code></pre>
+<p>Two corrections I needed during implementation:</p>
+<ol>
+<li>I initially hardcoded <code>ranked[:2]</code> even though the function accepted an argument named <code>k</code>. That meant the parameter didn't actually work.</li>
+<li>I originally returned <code>(score, chunk)</code> tuples, but my evaluation expected a list of text strings. I changed the return value to extract the passages.</li>
+</ol>
+<p>Then I wrote the first retrieval test:</p>
+<pre><code class="language-python">question = &quot;What equipment problems could explain poor solar generation?&quot;
+results = retrieve_top_k(question, chunks, k=2)
+
+expected_evidence = &quot;Inverter faults or equipment outages&quot;
+
+passed = any(
+    expected_evidence in chunk
+    for chunk in results
+)
+
+print(&quot;Retrieval evaluation:&quot;, &quot;PASS&quot; if passed else &quot;FAIL&quot;)
+</code></pre>
+<p>It passed. The first retrieved passage contained the four possible causes, including inverter faults.</p>
+<p>The new function <code>any()</code> was useful: it returns <code>True</code> if <strong>at least one</strong> retrieved passage contains the expected evidence.</p>
+<p><strong>What this test measures:</strong> whether the correct evidence appeared in the returned passages. It does <strong>not</strong> measure whether the generated answer used the evidence correctly.</p>
+<hr />
+<h2 id="12-exercise-45-my-first-retrieval-evaluation-suite">12. Exercise 45: My first retrieval evaluation suite</h2>
+<p>One successful query wasn't enough, so I created a small dataset of four questions with expected evidence:</p>
+<pre><code class="language-python">test_cases = [
+    {
+        &quot;question&quot;: &quot;What equipment problems could explain poor generation?&quot;,
+        &quot;expected&quot;: &quot;Inverter faults or equipment outages&quot;,
+    },
+    {
+        &quot;question&quot;: &quot;What weather conditions could reduce solar production?&quot;,
+        &quot;expected&quot;: &quot;Solar irradiance below forecast&quot;,
+    },
+    {
+        &quot;question&quot;: &quot;Can generation measurements establish the root cause?&quot;,
+        &quot;expected&quot;: &quot;Generation measurements alone cannot establish&quot;,
+    },
+    {
+        &quot;question&quot;: &quot;What data should I examine before determining a root cause?&quot;,
+        &quot;expected&quot;: &quot;operational logs and weather data&quot;,
+    },
+]
+</code></pre>
+<p>Then I evaluated both <code>k=1</code> and <code>k=2</code>:</p>
+<pre><code class="language-python">for k in range(1, 3):
+    test_results = []
+
+    for test_number, test in enumerate(test_cases, start=1):
+        results = retrieve_top_k(test[&quot;question&quot;], chunks, k=k)
+
+        passed = any(
+            test[&quot;expected&quot;] in chunk
+            for chunk in results
+        )
+
+        test_results.append(passed)
+        print(f&quot;Test {test_number}: {'PASS' if passed else 'FAIL'}&quot;)
+
+    hit_rate = sum(test_results) / len(test_results)
+    print(f&quot;Hit Rate@{k}: {hit_rate:.0%}&quot;)
+</code></pre>
+<p>My measured results were:</p>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Hit@1</th>
+<th>Hit@2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Equipment problems</td>
+<td><strong>FAIL</strong></td>
+<td><strong>FAIL</strong></td>
+</tr>
+<tr>
+<td>Weather conditions</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>Root-cause inference</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>Data to investigate</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td><strong>Overall hit rate</strong></td>
+<td><strong>75%</strong></td>
+<td><strong>75%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Increasing K from 1 to 2 <strong>did not improve the hit rate</strong> for these four examples.</p>
+<p>The metric is <strong>Hit Rate@K</strong>:</p>
+<p>[
+\operatorname{HitRate@K}
+= \frac{\text{questions with required evidence in Top-K}}
+       {\text{total evaluation questions}}
+]</p>
+<p>For my experiment, three of four questions passed, so Hit Rate@1 and Hit Rate@2 were both <strong>0.75</strong>, or <strong>75%</strong>.</p>
+<p>A useful property: for a fixed ranking and the same matching rule, Hit Rate@K should not decrease when K increases. Adding more results cannot remove a previously retrieved matching passage. But it may stay unchanged, as it did here.</p>
+<h3 id="121-the-failed-test-is-more-useful-than-it-first-looks">12.1 The failed test is more useful than it first looks</h3>
+<p>Earlier, a slightly different question passed:</p>
+<blockquote>
+<p>What equipment problems could explain <strong>poor solar generation</strong>?</p>
+</blockquote>
+<p>But this test failed:</p>
+<blockquote>
+<p>What equipment problems could explain <strong>poor generation</strong>?</p>
+</blockquote>
+<p>The difference in wording is small, yet retrieval behavior changed. I haven't diagnosed the exact cause yet, but it demonstrates why evaluating one carefully chosen prompt is not enough.</p>
+<p>Possible areas to investigate include query wording, chunk boundaries, embeddings, and the ranking of the cause-list chunk. I should inspect actual retrieved passages <strong>before</strong> deciding which one is responsible.</p>
+<h3 id="122-limits-of-the-current-evaluation">12.2 Limits of the current evaluation</h3>
+<p>My evaluation suite is a starting point, not a robust benchmark:</p>
+<ul>
+<li><strong>Only four questions</strong>, all based on one tiny sample document.</li>
+<li>A <strong>case-sensitive substring match</strong> decides PASS or FAIL; legitimate paraphrases or formatting changes could cause false failures.</li>
+<li>One piece of expected evidence is checked per question, even when a complete answer may require several pieces.</li>
+<li>It evaluates <strong>retrieval</strong>, not answer correctness, citation quality, or unsupported claims.</li>
+<li>I recompute document embeddings on each query, which is inefficient and unsuitable for a larger application.</li>
+<li>The 100-character chunker preserves oversized paragraphs but doesn't address paragraph overlap, sentence-aware splitting, or metadata such as source filenames and page numbers.</li>
+</ul>
+<p>Nevertheless, it gives me a <strong>repeatable measurement</strong>. I can change a retrieval strategy and compare the results instead of relying on whether one model answer sounds convincing.</p>
+<hr />
+<h2 id="13-lessons-about-engineering-not-just-ai">13. Lessons about engineering, not just AI</h2>
+<p>Several of my most useful mistakes were ordinary software engineering mistakes:</p>
+<table>
+<thead>
+<tr>
+<th>Mistake or surprise</th>
+<th>What it taught me</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pydantic model included only <code>trend</code></td>
+<td>Validate the schema itself, not only model output.</td>
+</tr>
+<tr>
+<td><code>verified_trend</code> remained <code>None</code></td>
+<td>Calculation and state persistence are different steps.</td>
+</tr>
+<tr>
+<td>Printed claims before checking <code>passed</code></td>
+<td>Evaluating a result is not the same as enforcing the result.</td>
+</tr>
+<tr>
+<td>Tool-result message was indented under one branch</td>
+<td>Every tool call needs its own result message.</td>
+</tr>
+<tr>
+<td>Used <code>arguments.limit</code> on a dictionary</td>
+<td>Use dictionary key syntax: <code>arguments["limit"]</code>.</td>
+</tr>
+<tr>
+<td>Reversed <code>isinstance()</code> condition</td>
+<td>Read boolean predicates carefully; write rejection tests.</td>
+</tr>
+<tr>
+<td>Added paragraph before checking chunk length</td>
+<td>Validate a candidate before committing state changes.</td>
+</tr>
+<tr>
+<td>Duplicated a paragraph while starting a new chunk</td>
+<td>Ensure each input item is consumed exactly once.</td>
+</tr>
+<tr>
+<td>Changed chunks without recomputing embeddings</td>
+<td>Keep every embedding aligned with its original source text.</td>
+</tr>
+<tr>
+<td>Imported a practice module and saw unexpected output</td>
+<td>Imports execute top-level module code.</td>
+</tr>
+<tr>
+<td>Hardcoded Top-2 despite accepting <code>k</code></td>
+<td>Test whether configurable parameters actually affect behavior.</td>
+</tr>
+<tr>
+<td>Returned score/text tuples to a test expecting strings</td>
+<td>Define clear function interfaces and return contracts.</td>
+</tr>
+</tbody>
+</table>
+<p>I'm trying to improve my Python fluency while learning applied AI. This seems especially important if I want to work at a startup, where I may need to build, debug, deploy, and support a product with relatively little hand-holding.</p>
+<hr />
+<h2 id="14-what-i-can-build-nowand-what-i-still-cannot-claim">14. What I can build now—and what I still cannot claim</h2>
+<p>With these exercises, I now understand and have implemented the core pieces of two connected systems.</p>
+<h3 id="a-a-tool-calling-energy-analyst-with-deterministic-checks">A. A tool-calling energy analyst with deterministic checks</h3>
+<pre><code class="language-text">User question
+    ↓
+Qwen selects approved Python tools
+    ↓
+Python validates arguments and queries SQLite
+    ↓
+Python computes verified trend/performance
+    ↓
+Qwen returns structured claims
+    ↓
+Pydantic validates structure
+    ↓
+Python compares claims to ground truth
+    ↓
+Accept verified classifications or reject the response
+</code></pre>
+<h3 id="b-a-semantic-rag-pipeline-with-basic-retrieval-evaluation">B. A semantic RAG pipeline with basic retrieval evaluation</h3>
+<pre><code class="language-text">Operational text document
+    ↓
+Paragraph-aware chunking
+    ↓
+Embedding model (nomic-embed-text)
+    ↓
+Question embedding + cosine similarity
+    ↓
+Top-K ranked passages
+    ↓
+Qwen generates an answer from retrieved context
+
+Separate test loop:
+Question + expected passage → Retrieve Top-K → PASS/FAIL → Hit Rate@K
+</code></pre>
+<p>What I <strong>cannot</strong> claim yet:</p>
+<ul>
+<li>That either system is deployed or production-ready.</li>
+<li>That structured-output validation proves the entire generated summary is correct.</li>
+<li>That a 75% hit rate on four toy examples represents real-world reliability.</li>
+<li>That the retriever can efficiently search thousands of documents.</li>
+<li>That the agent can safely recover from all tool exceptions, malformed results, or malicious document instructions.</li>
+</ul>
+<p>The aim is to close those gaps incrementally rather than hide them with a convincing demo.</p>
+<hr />
+<h2 id="15-next-steps">15. Next steps</h2>
+<p>I stopped immediately before <strong>Exercise 46</strong>, which is about diagnosing the retrieval test that failed at both <code>k=1</code> and <code>k=2</code>.</p>
+<p>The next debugging action is to inspect the <strong>actual Top-3 retrieved chunks</strong> for the failed question:</p>
+<pre><code class="language-python">question = test_cases[0][&quot;question&quot;]
+results = retrieve_top_k(question, chunks, k=3)
+
+for rank, chunk in enumerate(results, start=1):
+    print(f&quot;\nRank {rank}:&quot;)
+    print(chunk)
+</code></pre>
+<p>I don't want to tune embeddings, increase K, change the question, or modify chunking before I see the failure. <strong>A metric tells me something went wrong; it doesn't tell me why.</strong></p>
+<p>After that, I want to move toward a more realistic RAG implementation: reusable module structure, cached/indexed embeddings, a vector database, source metadata, retrieval-quality tests with more varied questions, answer-level grounding checks, and eventually deployment and monitoring.</p>
+<p>My longer-term goal is to turn the Solar Plant AI Analyst into a credible portfolio project for <strong>Applied AI Engineer or AI-focused software engineering roles at US startups</strong>. To get there, I need more than functioning examples. I need software that is understandable, testable, observable, reasonably safe, and useful to someone other than me.</p>
+<h2 id="final-takeaway">Final takeaway</h2>
+<p>My understanding of the engineering problem has changed across these exercises:</p>
+<blockquote>
+<p><strong>An LLM's fluent answer is not proof of correctness. A high similarity score is not proof of useful retrieval. And a passing test is only as meaningful as the behavior that test actually measures.</strong></p>
+</blockquote>
+<p>The most valuable habit I'm developing is to separate the parts I can compute or verify deterministically from the parts where a language model adds value—and to test the boundaries between them.</p>
+<p>That's the direction I want to keep following.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
